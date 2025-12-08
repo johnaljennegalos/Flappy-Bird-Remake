@@ -29,6 +29,9 @@ let velocityX = -2
 let velocityY = 0
 let gravity = 0.4
 
+let gameOver = false
+let score = 0
+
 
 window.onload = () => {
     board = document.getElementById('board');
@@ -64,7 +67,7 @@ function update(){
     bird.y = Math.max(bird.y + velocityY,0)
     context.drawImage(birdImg, bird.x, bird.y, birdWidth, birdHeight)
 
-
+    // console.log(pipeArray)
 
     for(let i = 0; i < pipeArray.length; i++) {
         let pipe = pipeArray[i]
@@ -72,6 +75,14 @@ function update(){
         pipe.x += velocityX
 
         context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
+
+        if(detectCollision(bird, pipe)){
+            gameOver = true
+        }
+    }
+
+    if(bird.y > board.height){
+        gameOver = true
     }
 }
 
@@ -108,4 +119,11 @@ function moveBird(e){
     if(e.code === "Space"){
         velocityY = -6
     }
+}
+
+function detectCollision(a, b){
+    return a.x < b.x + b.width &&
+           a.x + a.width > b.x &&
+           a.y < b.y + b.height &&
+           a.y + a.height > b.y
 }
