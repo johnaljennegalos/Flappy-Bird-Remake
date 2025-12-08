@@ -3,8 +3,8 @@ let boardWidth = 360;
 let boardHeight = 620;
 let context;
 
-let birdWidth = 110;
-let birdHeight = 110;
+let birdWidth = 34;
+let birdHeight = 24;
 let birdX = boardWidth/8
 let birdY = boardHeight/2;
 let birdImg;
@@ -41,7 +41,7 @@ window.onload = () => {
     context = board.getContext('2d');
 
     birdImg = new Image();
-    birdImg.src = "./img/22.png"
+    birdImg.src = "./img/flappybird.gif"
     birdImg.onload = () => {
         context.drawImage(birdImg, bird.x, bird.y, birdWidth, birdHeight);
     }
@@ -61,6 +61,10 @@ window.onload = () => {
 function update(){
     requestAnimationFrame(update)
 
+    if(gameOver){
+        return
+    }
+
     context.clearRect(0, 0, board.width, board.height);
 
     velocityY += gravity
@@ -76,8 +80,21 @@ function update(){
 
         context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
 
+        if(!pipe.passed && bird.x > pipe.x){
+            score += 0.5
+            pipe.passed = true
+        }
+
         if(detectCollision(bird, pipe)){
             gameOver = true
+        }
+
+        context.fillStyle = "white"
+        context.font = "45px sans-serif";
+        context.fillText(score, 0, 40)
+
+        if(gameOver){
+            context.fillText("GAME OVER", 0, 85)
         }
     }
 
