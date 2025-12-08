@@ -26,6 +26,8 @@ let topPipeImg
 let bottomPipeImg
 
 let velocityX = -2
+let velocityY = 0
+let gravity = 0.4
 
 
 window.onload = () => {
@@ -49,13 +51,20 @@ window.onload = () => {
 
     requestAnimationFrame(update)
     setInterval(placePipes, 1500)
+
+    document.addEventListener("keydown", moveBird)
 }
 
 function update(){
     requestAnimationFrame(update)
 
     context.clearRect(0, 0, board.width, board.height);
+
+    velocityY += gravity
+    bird.y = Math.max(bird.y + velocityY,0)
     context.drawImage(birdImg, bird.x, bird.y, birdWidth, birdHeight)
+
+
 
     for(let i = 0; i < pipeArray.length; i++) {
         let pipe = pipeArray[i]
@@ -93,5 +102,10 @@ function placePipes(){
 
     pipeArray.push(bottomPipe)
 
+}
 
+function moveBird(e){
+    if(e.code === "Space"){
+        velocityY = -6
+    }
 }
