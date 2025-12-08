@@ -3,8 +3,8 @@ let boardWidth = 360;
 let boardHeight = 620;
 let context;
 
-let birdWidth = 32;
-let birdHeight = 24;
+let birdWidth = 110;
+let birdHeight = 110;
 let birdX = boardWidth/8
 let birdY = boardHeight/2;
 let birdImg;
@@ -38,7 +38,7 @@ window.onload = () => {
     context = board.getContext('2d');
 
     birdImg = new Image();
-    birdImg.src = "./img/flappybird.gif"
+    birdImg.src = "./img/22.png"
     birdImg.onload = () => {
         context.drawImage(birdImg, bird.x, bird.y, birdWidth, birdHeight);
     }
