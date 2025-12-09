@@ -95,7 +95,7 @@ function update(){
 
         if (bird.y + bird.height >= board.height) {
             gameOver = true;
-            bird.y = board.height - bird.height; // This snaps the bird to the floor
+            bird.y = board.height - bird.height;
         }
 
         if(gameOver){
