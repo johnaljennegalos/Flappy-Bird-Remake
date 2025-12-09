@@ -93,14 +93,17 @@ function update(){
         context.font = "45px sans-serif";
         context.fillText(score, 0, 40)
 
+        if (bird.y + bird.height >= board.height) {
+            gameOver = true;
+            bird.y = board.height - bird.height; // This snaps the bird to the floor
+        }
+
         if(gameOver){
             context.fillText("GAME OVER", 0, 85)
         }
     }
 
-    if(bird.y > board.height){
-        gameOver = true
-    }
+
 }
 
 function placePipes(){
