@@ -1,83 +1,280 @@
-# 🐦 Flappy-Bird-Remake (Vanilla JS Engine)
+# 🐦 Flappy Bird Remake
 
-[![GitHub followers](https://img.shields.io/github/followers/johnaljennegalos?style=social)](https://github.com/johnaljennegalos)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-
-> **Physics Simulation. Collision Detection. Real-Time Game Loop.**
-
-This repository contains a browser-based remake of the classic Flappy Bird, built entirely from scratch without using any external game engines (like Phaser or Unity). The focus of this project is mastering core JavaScript concepts like the game loop, DOM manipulation, and mathematical physics simulation.
+A browser-based remake of the classic **Flappy Bird**, built entirely from scratch using **Vanilla JavaScript**, **HTML5**, and **CSS3**. This project focuses on mastering fundamental game development concepts such as game loops, physics simulation, collision detection, and DOM manipulation without relying on external game engines.
 
 ---
 
-## 📚 Table of Contents
-- [Engineering Challenges](#-engineering-challenges)
-- [Game Architecture](#-game-architecture)
-- [Core Mechanics](#-core-mechanics)
-- [Installation & Setup](#-installation--setup)
+## ✨ Features
+
+* 🎮 Classic Flappy Bird gameplay
+* ⚡ Custom game engine built with Vanilla JavaScript
+* 🧮 Physics-based bird movement and gravity simulation
+* 💥 Real-time collision detection
+* 🏗 Dynamic pipe generation and obstacle management
+* 📊 Live score tracking
+* 🖥 Lightweight and browser-based
+* 🚫 No frameworks or external game engines required
 
 ---
 
-## 🧠 Engineering Challenges Overcome
+## 🛠 Tech Stack
 
-Building a game without an engine requires writing the math and lifecycle hooks manually. Based on the commit history, here are the key technical hurdles solved in this project:
+### Frontend
 
-### 1. Vertical Boundary Constraints (Ceiling Physics)
-*Commit: `fix the game ceiling of the bird when it decends`*
-* **The Problem:** The bird could fly off the top of the screen, breaking the game boundaries, or the descent velocity would calculate incorrectly after hitting the top limit.
-* **The Fix:** Implemented a hard ceiling coordinate constraint (`y <= 0`) combined with a velocity reset, ensuring smooth and realistic descent physics even when the player spams the jump control.
+* JavaScript (ES6+)
+* HTML5
+* CSS3
 
-### 2. Asset Initialization & Preloading
-*Commit: `initialize js and display images on window load`*
-* **The Problem:** Triggering the game loop before the browser had fully downloaded the image assets caused invisible pipes or a missing bird sprite on the first frame.
-* **The Fix:** Wrapped the game initialization logic inside a `window.onload` event listener, guaranteeing that the DOM and all visual assets are fully rendered before the `flappy.js` engine starts running.
+### Core Concepts
 
-
+* Game Loop Architecture
+* Physics Simulation
+* Collision Detection
+* Event Handling
+* DOM Manipulation
 
 ---
 
-## 🏗️ Game Architecture
+## 📁 Project Structure
 
-The project enforces a strict separation of concerns, keeping logic, structure, and styling decoupled:
+```text
+Flappy-Bird-Remake/
+├── index.html   # Game structure and UI elements
+├── style.css    # Styling and layout
+└── flappy.js    # Game engine, physics, and collision logic
+```
 
-| File | Responsibility | Technical Details |
-| :--- | :--- | :--- |
-| `index.html` | Structure | Defines the game container, UI overlays (Score, Game Over), and imports scripts. |
-| `style.css` | Presentation | Handles absolute positioning, z-indexing for background/foreground layers, and responsive layout. |
-| `flappy.js` | Logic Engine | Controls the gravity accumulation, pipe spawning intervals, and collision math. |
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/johnaljennegalos/Flappy-Bird-Remake.git
+cd Flappy-Bird-Remake
+```
+
+### 2. Run the Game
+
+Since this is a pure Vanilla JavaScript project, no dependencies or build steps are required.
+
+#### Option 1: Open Directly
+
+Simply double-click:
+
+```text
+index.html
+```
+
+to launch the game in your browser.
+
+#### Option 2: Use a Local Development Server (Recommended)
+
+Using Python:
+
+```bash
+python -m http.server 5500
+```
+
+Open:
+
+```text
+http://localhost:5500
+```
+
+Or use the **Live Server** extension in Visual Studio Code for automatic reloads during development.
+
+---
+
+## 🧠 How It Works
+
+### 1. Game Initialization
+
+The game loads all visual assets and initializes the engine after the browser finishes loading:
+
+```javascript
+window.onload
+```
+
+This prevents missing sprites and rendering issues during startup.
+
+### 2. Game Loop
+
+A continuous update cycle handles:
+
+* Bird movement
+* Gravity calculations
+* Pipe generation
+* Collision checks
+* Score updates
+* Rendering
+
+### 3. Physics Engine
+
+The bird's vertical movement is controlled through:
+
+* Constant downward gravity
+* Upward velocity on jump input
+* Boundary constraints
+
+This creates the familiar Flappy Bird flying behavior.
+
+### 4. Collision Detection
+
+The game uses **Axis-Aligned Bounding Box (AABB)** collision detection to determine whether the bird intersects:
+
+* Pipes
+* Ground
+* Screen boundaries
+
+### 5. Obstacle Management
+
+Pipes are:
+
+* Spawned dynamically
+* Moved across the screen
+* Removed once off-screen
+
+This helps maintain performance and prevents memory issues.
+
+---
+
+## 🔧 Engineering Challenges Solved
+
+### Ceiling Boundary Physics
+
+**Problem:**
+
+The bird could exceed the upper screen boundary, causing unrealistic movement and physics glitches.
+
+**Solution:**
+
+Implemented:
+
+* Maximum Y-position constraints
+* Velocity resets when hitting the ceiling
+
+This ensures stable and consistent movement.
+
+---
+
+### Asset Initialization & Loading
+
+**Problem:**
+
+Game assets occasionally failed to render on the first frame because the game loop started before images finished loading.
+
+**Solution:**
+
+Wrapped initialization inside:
+
+```javascript
+window.onload
+```
+
+This guarantees all assets are available before gameplay begins.
 
 ---
 
 ## ⚙️ Core Mechanics
 
-* **Gravity Engine:** Applies constant downward velocity to the bird's Y-axis per frame.
-* **Input Handling:** Captures user events to apply immediate negative Y-velocity (the "jump").
-* **AABB Collision:** Uses Axis-Aligned Bounding Box math to detect if the bird's coordinates intersect with the dynamically generated pipe coordinates or the ground.
-* **Memory Management:** Despawns pipes once they exit the left side of the screen to prevent browser memory leaks.
+### Gravity System
+
+Applies continuous downward acceleration to the bird every frame.
+
+### Jump Controls
+
+User input applies an immediate upward force, allowing the bird to navigate obstacles.
+
+### Collision Engine
+
+Uses AABB collision mathematics to detect interactions with:
+
+* Pipes
+* Ground
+* Boundaries
+
+### Memory Optimization
+
+Off-screen pipes are automatically removed to prevent unnecessary memory usage.
 
 ---
 
-## 🚀 Installation & Setup
+## 📌 Notes & Limitations
 
-Because this is a pure Vanilla JS project, there are no node modules or build steps required.
+* Designed primarily for desktop browsers.
+* Performance may vary on lower-end devices.
+* Collision detection uses rectangular hitboxes for efficiency.
+* Browser support is best on modern browsers such as:
 
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/johnaljennegalos/Flappy-Bird-Remake.git](https://github.com/johnaljennegalos/Flappy-Bird-Remake.git)
-
-2. **Navigate into the folder:**
-   ```bash
-   cd Flappy-Bird-Remake
-
-3. **Run the Game:**
-   * Simply double-click `index.html` to open it in your default web browser.
-   * *(Optional but recommended)*: Right-click `index.html` and open with VS Code's **Live Server** extension for the best development experience.
+  * Google Chrome
+  * Microsoft Edge
+  * Firefox
+  * Brave
 
 ---
+
+## 🗺 Roadmap
+
+* [ ] Add sound effects and background music
+* [ ] Add high-score persistence using Local Storage
+* [ ] Add difficulty levels
+* [ ] Improve mobile responsiveness
+* [ ] Add pause and restart controls
+* [ ] Add animated bird sprites
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+To contribute:
+
+1. Fork the repository
+2. Create a feature branch
+
+```bash
+git checkout -b feature/my-feature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Add new feature"
+```
+
+4. Push your branch
+
+```bash
+git push origin feature/my-feature
+```
+
+5. Open a Pull Request
+
+Feel free to submit bug reports, improvements, or feature requests through GitHub Issues.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+You are free to use, modify, and distribute this project under the terms of the license.
+
+---
+
+## 👨‍💻 Author
 
 **John Aljenne Galos**
-* 📧 [galosjohnaljenne@gmail.com](mailto:galosjohnaljenne@gmail.com)
-* 🐙 [GitHub: johnaljennegalos](https://github.com/johnaljennegalos)
 
-*Built to master the fundamentals.*
+📧 [galosjohnaljenne@gmail.com](mailto:galosjohnaljenne@gmail.com)
+
+🐙 GitHub: https://github.com/johnaljennegalos
+
+If you found this project helpful, consider giving it a ⭐ on GitHub.
+
+---
+
+### Built to Master the Fundamentals of Game Development 🎮
